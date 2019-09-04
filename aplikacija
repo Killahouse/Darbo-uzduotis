@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		System.out.println("Iveskite pradinio skaiciaus A reiksme");
+		Scanner ivedimas = new Scanner(System.in);
+		long skaiciusA = ivedimas.nextLong();
+		System.out.println("Iveskite pradinio skaiciaus B reiksme");
+		long skaiciusB = ivedimas.nextLong();
+		int skaitliukas = 0;
+
+		for (int i = 0; i < 1000000; i++) {
+			skaiciusA = skaiciusA * 16807;
+			skaiciusA = skaiciusA % 2147483647;
+			skaiciusB = skaiciusB * 48271;
+			skaiciusB = skaiciusB % 2147483647;
+			System.out.print(skaiciusA + "    ");
+			System.out.println(skaiciusB);
+
+			String paskutiniaiBitaiA = konvertavimasBitus(skaiciusA, 32)
+					.substring(konvertavimasBitus(skaiciusA, 32).length() - 8);
+			System.out.println(paskutiniaiBitaiA);
+			String paskutiniaiBitaiB = konvertavimasBitus(skaiciusB, 32)
+					.substring(konvertavimasBitus(skaiciusB, 32).length() - 8);
+			System.out.println(paskutiniaiBitaiB);
+
+			if (paskutiniaiBitaiA.equals(paskutiniaiBitaiB)) {
+
+				skaitliukas++;
+			}
+			//System.out.println("Teigiami palyginimai: " + skaitliukas);
+			System.out.println("A  " + konvertavimasBitus(skaiciusA, 32));
+			System.out.println("B  " + konvertavimasBitus(skaiciusB, 32));
+		}
+		System.out.println("Teigiami palyginimai: " + skaitliukas);
+		ivedimas.close();
+	}
+
+	public static String konvertavimasBitus(long skaicius, int bituIlgis) {
+
+		if (bituIlgis > 0) {
+			return String.format("%" + bituIlgis + "s", Long.toBinaryString(skaicius)).replaceAll(" ", "0");
+		}
+
+		return null;
+	}
+
+}
